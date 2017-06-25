@@ -14,6 +14,6 @@ namespace StructuredDebate.Models
         public DateTime Date { get; set; }
 
         public virtual ICollection<Argument> Arguments { get; set; }
-        public virtual ICollection<Tag> Tags { get; set; }
+        public virtual ICollection<TagRelation> TagRelations { get; set; }
     }
 }

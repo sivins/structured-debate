@@ -5,16 +5,14 @@ using System.Web;
 
 namespace StructuredDebate.Models
 {
-    public class Argument
+    public class CrossExamination
     {
+        public int CrossExaminationID { get; set; }
         public int ArgumentID { get; set; }
-        public int PostID { get; set; }
         public string Body { get; set; }
-        public bool Affirmative { get; set; }
         public int Score { get; set; }
 
         public virtual ICollection<Source> Sources { get; set; }
-        public virtual ICollection<CrossExamination> CrossExaminations { get; set; }
-        public virtual Post Post { get; set; }
+        public virtual Argument Argument { get; set; }
     }
 }
