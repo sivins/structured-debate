@@ -14,5 +14,8 @@ namespace StructuredDebate.Models
         public DateTime PublishedDate { get; set; }
         public string Author { get; set; }
         public string Description { get; set; }
+
+        public virtual Argument Argument { get; set; }
+        public virtual CrossExamination CrossExamination { get; set; }
     }
 }

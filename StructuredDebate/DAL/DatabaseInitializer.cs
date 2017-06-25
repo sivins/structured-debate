@@ -15,7 +15,7 @@ namespace StructuredDebate.DAL
         private bool BooleanGenerator()
         {
             var r = new Random();
-            var num = r.Next(1);
+            var num = r.Next(0,2);
             if (num == 0) {
                 return false;
             }
@@ -24,9 +24,13 @@ namespace StructuredDebate.DAL
 
         protected override void Seed(ApplicationContext context)
         {
+
+            var generator = new RandomGenerator();
+
             var posts = Builder<Post>.CreateListOfSize(100).All()
                 .With(c => c.Claim = Faker.Lorem.Sentence())
                 .With(c => c.OpeningStatement = Faker.Lorem.Paragraph())
+                .With(c => c.Date = generator.Next(January.The(1), December.The(31)))
                 .With(c => c.Score = Faker.RandomNumber.Next(-100, 10000))
                 .Build();
 
@@ -37,7 +41,7 @@ namespace StructuredDebate.DAL
                 .With(c => c.Body = Faker.Lorem.Paragraph())
                 .With(c => c.Affirmative = BooleanGenerator())
                 .With(c => c.Score = Faker.RandomNumber.Next(-100, 10000))
-                .With(c => c.PostID = Faker.RandomNumber.Next(99))
+                .With(c => c.PostID = Faker.RandomNumber.Next(1, 100))
                 .Build();
 
             context.Arguments.AddOrUpdate(c => c.ArgumentID, arguments.ToArray());
@@ -46,19 +50,17 @@ namespace StructuredDebate.DAL
             var crossExaminations = Builder<CrossExamination>.CreateListOfSize(500).All()
                 .With(c => c.Body = Faker.Lorem.Paragraph())
                 .With(c => c.Score = Faker.RandomNumber.Next(-100, 10000))
-                .With(c => c.ArgumentID = Faker.RandomNumber.Next(999))
+                .With(c => c.ArgumentID = Faker.RandomNumber.Next(1, 1000))
                 .Build();
 
             context.CrossExaminations.AddOrUpdate(c => c.CrossExaminationID, crossExaminations.ToArray());
             context.SaveChanges();
 
-            var generator = new RandomGenerator();
-
             var sources = Builder<Source>.CreateListOfSize(1000).All()
               .TheFirst(500)
-                .With(c => c.ArgumentID = Faker.RandomNumber.Next(999))
+                .With(c => c.ArgumentID = Faker.RandomNumber.Next(1,1000))
               .TheLast(500)
-                .With(c => c.CrossExaminationID = Faker.RandomNumber.Next(499))
+                .With(c => c.CrossExaminationID = Faker.RandomNumber.Next(1, 500))
                 .With(c => c.URL = Faker.Internet.DomainName())
                 .With(c => c.PublishedDate = generator.Next(January.The(1), December.The(31)))
                 .With(c => c.Author = Faker.Name.FullName())
@@ -74,8 +76,8 @@ namespace StructuredDebate.DAL
             context.SaveChanges();
 
             var tagRelations = Builder<TagRelation>.CreateListOfSize(500).All()
-                .With(c => c.TagID = Faker.RandomNumber.Next(99))
-                .With(c => c.PostID = Faker.RandomNumber.Next(99))
+                .With(c => c.TagID = Faker.RandomNumber.Next(1, 100))
+                .With(c => c.PostID = Faker.RandomNumber.Next(1, 100))
                 .Build();
 
             context.TagRelations.AddOrUpdate(c => c.TagRelationID, tagRelations.ToArray());

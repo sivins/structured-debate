@@ -11,7 +11,6 @@ namespace StructuredDebate.DAL
     {
         public ApplicationContext() : base("ApplicationContext")
         {
-            Database.SetInitializer<ApplicationContext>(new DropCreateDatabaseAlways<ApplicationContext>());
         }
 
         public DbSet<Post> Posts { get; set; }

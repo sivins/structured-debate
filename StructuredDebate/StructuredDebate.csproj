@@ -218,6 +218,35 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706250504012_InitialCreate.cs" />
+    <Compile Include="Migrations\201706250504012_InitialCreate.Designer.cs">
+      <DependentUpon>201706250504012_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706250609014_Test.cs" />
+    <Compile Include="Migrations\201706250609014_Test.Designer.cs">
+      <DependentUpon>201706250609014_Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706252044004_Remove-Source-Reference.cs" />
+    <Compile Include="Migrations\201706252044004_Remove-Source-Reference.Designer.cs">
+      <DependentUpon>201706252044004_Remove-Source-Reference.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706252053488_Bringing-Back-Foreign-Keys.cs" />
+    <Compile Include="Migrations\201706252053488_Bringing-Back-Foreign-Keys.Designer.cs">
+      <DependentUpon>201706252053488_Bringing-Back-Foreign-Keys.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706252056261_Nullable-Foreign-Key.cs" />
+    <Compile Include="Migrations\201706252056261_Nullable-Foreign-Key.Designer.cs">
+      <DependentUpon>201706252056261_Nullable-Foreign-Key.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706252140423_Bools-Are-Too-Tricky.cs" />
+    <Compile Include="Migrations\201706252140423_Bools-Are-Too-Tricky.Designer.cs">
+      <DependentUpon>201706252140423_Bools-Are-Too-Tricky.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706252149381_figured-out-the-bools.cs" />
+    <Compile Include="Migrations\201706252149381_figured-out-the-bools.Designer.cs">
+      <DependentUpon>201706252149381_figured-out-the-bools.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Argument.cs" />
     <Compile Include="Models\CrossExamination.cs" />
@@ -335,6 +364,29 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201706250504012_InitialCreate.resx">
+      <DependentUpon>201706250504012_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706250609014_Test.resx">
+      <DependentUpon>201706250609014_Test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706252044004_Remove-Source-Reference.resx">
+      <DependentUpon>201706252044004_Remove-Source-Reference.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706252053488_Bringing-Back-Foreign-Keys.resx">
+      <DependentUpon>201706252053488_Bringing-Back-Foreign-Keys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706252056261_Nullable-Foreign-Key.resx">
+      <DependentUpon>201706252056261_Nullable-Foreign-Key.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706252140423_Bools-Are-Too-Tricky.resx">
+      <DependentUpon>201706252140423_Bools-Are-Too-Tricky.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706252149381_figured-out-the-bools.resx">
+      <DependentUpon>201706252149381_figured-out-the-bools.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
