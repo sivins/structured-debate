@@ -1,0 +1,51 @@
+﻿@model IEnumerable<StructuredDebate.Models.Post>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Claim)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OpeningStatement)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Score)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Claim)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OpeningStatement)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Score)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PostID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PostID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PostID })
+        </td>
+    </tr>
+}
+
+</table>
