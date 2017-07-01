@@ -57,15 +57,17 @@ namespace StructuredDebate.DAL
             context.SaveChanges();
 
             var sources = Builder<Source>.CreateListOfSize(1000).All()
-              .TheFirst(500)
-                .With(c => c.ArgumentID = Faker.RandomNumber.Next(1,1000))
-              .TheLast(500)
-                .With(c => c.CrossExaminationID = Faker.RandomNumber.Next(1, 500))
+                .With(c => c.ArgumentID = null)
+                .With(c => c.CrossExaminationID = null)
                 .With(c => c.URL = Faker.Internet.DomainName())
                 .With(c => c.PublishedDate = generator.Next(January.The(1), December.The(31)))
                 .With(c => c.Author = Faker.Name.FullName())
                 .With(c => c.Description = Faker.Lorem.Sentence())
-                .Build();
+              .TheFirst(500)
+                .With(c => c.ArgumentID = Faker.RandomNumber.Next(1,1000))
+              .TheLast(500)
+                .With(c => c.CrossExaminationID = Faker.RandomNumber.Next(1, 500))
+              .Build();
 
             context.Sources.AddOrUpdate(c => c.SourceID, sources.ToArray());
             context.SaveChanges();
