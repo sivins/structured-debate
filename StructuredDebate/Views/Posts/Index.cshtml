@@ -1,51 +1,40 @@
 ﻿@model IEnumerable<StructuredDebate.Models.Post>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Home Page";
 }
 
-<h2>Index</h2>
+<link href="~/Content/Index.css" type="text/css" rel="stylesheet" />
 
-<p>
-    @Html.ActionLink("Create New", "Create")
+<h2>Structured Debate</h2>
+
+<p class="header">
+    Welcome to Structured Debate!  We strive to foster a community that welcomes civil, fact-based debate over controversial (and sometimes just fun) topics such as politics, religion, conspiracies, and pop culture.  Please take the time to read the culture guide before posting.  Thank you for visiting, and enjoy!
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Claim)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OpeningStatement)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Score)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Claim)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OpeningStatement)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Score)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PostID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PostID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PostID })
-        </td>
-    </tr>
+@foreach (var item in Model)
+{
+    
+    <div class="vote-container">
+        <div class="upvote">
+            Upvote
+        </div>
+        <div class="score">
+            @item.Score
+        </div>
+        <div class="downvote">
+            Downvote
+        </div>
+    </div>
+
+    <div class="claim-container">
+        <h3 class="claim">
+            @Html.ActionLink(@item.Claim, "Details", new { id = @item.PostID }, new {@class="claim-link" })
+        </h3>
+        <p class="opening-statement">
+            @item.OpeningStatement
+        </p>
+    </div>
+
+
 }
-
-</table>

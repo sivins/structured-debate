@@ -1,0 +1,16 @@
+﻿body {
+}
+
+p.header {
+
+}
+
+.vote-container {
+    display: inline-block;
+    width: 100px;
+}
+
+.claim-container {
+    display: inline-block;
+    width: 800px;
+}
