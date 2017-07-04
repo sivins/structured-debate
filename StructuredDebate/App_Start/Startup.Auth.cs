@@ -58,11 +58,12 @@ namespace StructuredDebate
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            // TODO: Hide this
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "864187528044-4bc90er31m3likqmt51cjiinv83gk4vu.apps.googleusercontent.com",
+                ClientSecret = "eMbS1aGDafUzgDEjbBEWooY6"
+            });
         }
     }
 }
