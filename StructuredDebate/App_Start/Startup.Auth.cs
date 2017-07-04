@@ -54,9 +54,9 @@ namespace StructuredDebate
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "147903185774618",
+               appSecret: "0b7d4a14c024450e445721390e1298f6");
 
             // TODO: Hide this
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
