@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using StructuredDebate.DAL;
 using StructuredDebate.Models;
+using Microsoft.AspNet.Identity;
+using Vereyon.Web;
 
 namespace StructuredDebate.Controllers
 {
@@ -114,6 +116,65 @@ namespace StructuredDebate.Controllers
             db.Posts.Remove(post);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        protected UserManager<ApplicationUser> UserManager { get; set; }
+
+        //POST: Posts/Upvote/5
+        [HttpPost]
+        [Authorize]
+        public PartialViewResult Vote(int id, string upOrDown)
+        {
+            Post post = db.Posts.Find(id);
+            var userID = User.Identity.GetUserId();
+            var userVote = new UserVote();
+            //If an exception is thrown, it means the user has not voted on this thing yet, so go ahead and cast their vote
+            try
+            {
+                userVote = db.UserVotes.Where(i => i.PostID == post.PostID).Where(i => i.UserID == userID).First();
+            }
+            catch
+            {
+                //Log vote in database
+                var newUserVote = new UserVote();
+                newUserVote.Vote = upOrDown;
+                newUserVote.PostID = post.PostID;
+                newUserVote.UserID = userID;
+                db.UserVotes.Add(newUserVote);
+                db.SaveChanges();
+
+                //Update score
+                if (upOrDown == "Up") { post.Score++; } else { post.Score--; }
+            }
+            
+            if (userVote.PostID == post.PostID)
+            {
+                //They have already voted
+                if (userVote.Vote == upOrDown)
+                {
+                    //They are not allowed to duplicate their vote
+                    ViewBag.Score = post.Score.ToString() + "<br>Only one vote.";
+                    return PartialView("_ScorePartial");
+                }
+
+                //However, they can change their vote
+                userVote.Vote = upOrDown;
+                db.UserVotes.Attach(userVote);
+                var voteEntry = db.Entry(userVote);
+                voteEntry.Property(v => v.Vote).IsModified = true;
+                db.SaveChanges();
+
+                //If they have already voted, we need to increment/decrement by two to correct it
+                if (upOrDown == "Up") { post.Score = post.Score + 2; } else { post.Score = post.Score - 2; }
+            }
+
+            //Send the changes in
+            var entry = db.Entry(post);
+            entry.Property(e => e.Score).IsModified = true;
+            db.SaveChanges();
+
+            ViewBag.Score = post.Score;
+            return PartialView("_ScorePartial");
         }
 
         protected override void Dispose(bool disposing)

@@ -17,13 +17,13 @@
     
     <div class="vote-container">
         <div class="upvote">
-            Upvote
+            @Ajax.ActionLink("Upvote", "Vote", new { id = item.PostID, upOrDown = "Up" }, new AjaxOptions { HttpMethod="Post", InsertionMode=InsertionMode.Replace, UpdateTargetId="score"+item.PostID.ToString() })
         </div>
-        <div class="score">
+        <div id="@("score"+item.PostID.ToString())">
             @item.Score
         </div>
         <div class="downvote">
-            Downvote
+            @Ajax.ActionLink("Downvote", "Vote", new { id = item.PostID, upOrDown = "Down" }, new AjaxOptions { HttpMethod="Post", InsertionMode=InsertionMode.Replace, UpdateTargetId="score"+item.PostID.ToString() })
         </div>
     </div>
 
