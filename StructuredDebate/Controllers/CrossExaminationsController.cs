@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using StructuredDebate.DAL;
 using StructuredDebate.Models;
+using Microsoft.AspNet.Identity;
 
 namespace StructuredDebate.Controllers
 {
@@ -119,6 +120,63 @@ namespace StructuredDebate.Controllers
             db.CrossExaminations.Remove(crossExamination);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        //POST: CrossExaminations/Vote/5
+        [HttpPost]
+        [Authorize]
+        public PartialViewResult Vote(int id, string upOrDown)
+        {
+            CrossExamination crossExamination = db.CrossExaminations.Find(id);
+            var userID = User.Identity.GetUserId();
+            var userVote = new UserVote();
+            //If an exception is thrown, it means the user has not voted on this thing yet, so go ahead and cast their vote
+            try
+            {
+                userVote = db.UserVotes.Where(i => i.CrossExaminationID == crossExamination.CrossExaminationID).Where(i => i.UserID == userID).First();
+            }
+            catch
+            {
+                //Log vote in database
+                var newUserVote = new UserVote();
+                newUserVote.Vote = upOrDown;
+                newUserVote.CrossExaminationID = crossExamination.CrossExaminationID;
+                newUserVote.UserID = userID;
+                db.UserVotes.Add(newUserVote);
+                db.SaveChanges();
+
+                //Update score
+                if (upOrDown == "Up") { crossExamination.Score++; } else { crossExamination.Score--; }
+            }
+            
+            if (userVote.CrossExaminationID == crossExamination.CrossExaminationID)
+            {
+                //They have already voted
+                if (userVote.Vote == upOrDown)
+                {
+                    //They are not allowed to duplicate their vote
+                    ViewBag.Score = crossExamination.Score.ToString() + "<br>Only one vote.";
+                    return PartialView("_ScorePartial");
+                }
+
+                //However, they can change their vote
+                userVote.Vote = upOrDown;
+                db.UserVotes.Attach(userVote);
+                var voteEntry = db.Entry(userVote);
+                voteEntry.Property(v => v.Vote).IsModified = true;
+                db.SaveChanges();
+
+                //If they have already voted, we need to increment/decrement by two to correct it
+                if (upOrDown == "Up") { crossExamination.Score = crossExamination.Score + 2; } else { crossExamination.Score = crossExamination.Score - 2; }
+            }
+
+            //Send the changes in
+            var entry = db.Entry(crossExamination);
+            entry.Property(e => e.Score).IsModified = true;
+            db.SaveChanges();
+
+            ViewBag.Score = crossExamination.Score;
+            return PartialView("_ScorePartial");
         }
 
         protected override void Dispose(bool disposing)

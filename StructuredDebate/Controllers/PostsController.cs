@@ -120,7 +120,7 @@ namespace StructuredDebate.Controllers
 
         protected UserManager<ApplicationUser> UserManager { get; set; }
 
-        //POST: Posts/Upvote/5
+        //POST: Posts/Vote/5
         [HttpPost]
         [Authorize]
         public PartialViewResult Vote(int id, string upOrDown)
