@@ -4,86 +4,107 @@
     ViewBag.Title = Html.DisplayFor(model => model.Claim);
 }
 
-<div>
-    <h4>@Html.DisplayFor(model => model.Claim)</h4>
-    <hr />
-    <div class="score">
-        <div class="upvote">Upvote</div>
-        <div class="score-number">@Html.DisplayFor(model => model.Score)</div>
-        <div class="downvote">Downvote</div>
+<h2>@Html.DisplayFor(model => model.Claim)</h2>
+<hr />
+<div class="row">
+    <div class="col-md-2">
+        <div class="row">
+            <div class="col-md-12">Upvote</div>
+            <div class="col-md-12">@Html.DisplayFor(model => model.Score)</div>
+            <div class="col-md-12">Downvote</div>
+        </div>
     </div>
-    <div class="opening-statement">@Html.DisplayFor(model => model.OpeningStatement)</div>
-
-    <h4 id="affirmative-arguments">Affirmative Arguments</h4>
-    <hr />
-    @foreach (var item in Model.Arguments.Where(c => c.Affirmative))
-    {
-        <div class="score">
-            <div class="upvote">Upvote</div>
-            <div class="score-number">@item.Score.ToString()</div>
-            <div class="downvote">Downvote</div>
-        </div>
-        <div class="opening-statement">@item.Body</div>
-        <h3>Cross Examination</h3>
-        <hr />
-        if (item.CrossExaminations.Count == 0)
-        {
-            <div>There are no crossexaminations</div>
-        }
-        else
-        {
-            foreach (var ce in item.CrossExaminations)
-            {
-                <div class="score">
-                    <div class="upvote">Upvote</div>
-                    <div class="score-number">@ce.Score.ToString()</div>
-                    <div class="downvote">Downvote</div>
-                </div>
-                <div class="opening-statement">@ce.Body</div>
-            }
-        }
-        foreach (var ce in item.CrossExaminations)
-        {
-            <div class="score">
-                <div class="upvote">Upvote</div>
-                <div class="score-number">@ce.Score.ToString()</div>
-                <div class="downvote">Downvote</div>
-            </div>
-            <div class="opening-statement">@ce.Body</div>
-        }
-    }
-
-    <h4 id="negative-arguments">Negative Arguments</h4>
-    <hr />
-    @foreach (var item in Model.Arguments.Where(c => c.Affirmative == false))
-    {
-        <div class="score">
-            <div class="upvote">Upvote</div>
-            <div class="score-number">@item.Score.ToString()</div>
-            <div class="downvote">Downvote</div>
-        </div>
-        <div class="opening-statement">@item.Body</div>
-        <h3>Cross Examination</h3>
-        <hr />
-        if (item.CrossExaminations.Count == 0)
-        {
-            <div>There are no crossexaminations</div>
-        }
-        else
-        {
-            foreach (var ce in item.CrossExaminations)
-            {
-                <div class="score">
-                    <div class="upvote">Upvote</div>
-                    <div class="score-number">@ce.Score.ToString()</div>
-                    <div class="downvote">Downvote</div>
-                </div>
-                <div class="opening-statement">@ce.Body</div>
-            }
-        }
-    }
-
+    <div class="col-md-10">@Html.DisplayFor(model => model.OpeningStatement)</div>
 </div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Affirmative Arguments</h3>
+        <hr />
+
+        @foreach (var item in Model.Arguments.Where(c => c.Affirmative))
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">Upvote</div>
+                        <div class="col-md-12">@item.Score.ToString()</div>
+                        <div class="col-md-12">Downvote</div>
+                    </div>
+                </div>
+                <div class="col-md-8">@item.Body</div>
+            </div>
+            <h4>Cross Examination</h4>
+            <hr />
+            if (item.CrossExaminations.Count == 0)
+            {
+                <div class="cross-examination">There are no cross examinations</div>
+            }
+            else
+            {
+                foreach (var ce in item.CrossExaminations)
+                {
+                    <div class="row cross-examination">
+                        <div class="col-offset-2 col-md-4">
+                            <div class="row">
+                                <div class="col-md-12">Upvote</div>
+                                <div class="col-md-12">@ce.Score.ToString()</div>
+                                <div class="col-md-12">Downvote</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <small>@ce.Body</small>
+                        </div>
+                    </div>
+                    <hr />
+                }
+            }
+            <hr />
+        }
+
+    </div>
+    <div class="col-md-6">
+        <h3>Negative Arguments</h3>
+        <hr />
+        @foreach (var item in Model.Arguments.Where(c => c.Affirmative == false))
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">Upvote</div>
+                        <div class="col-md-12">@item.Score.ToString()</div>
+                        <div class="col-md-12">Downvote</div>
+                    </div>
+                </div>
+                <div class="col-md-8">@item.Body</div>
+            </div>
+            <h4>Cross Examination</h4>
+            <hr />
+            if (item.CrossExaminations.Count == 0)
+            {
+                <div class="cross-examination">There are no cross examinations</div>
+            }
+            else
+            {
+                foreach (var ce in item.CrossExaminations)
+                {
+                    <div class="row cross-examination">
+                        <div class="col-offset-2 col-md-4">
+                            <div class="row">
+                                <div class="col-md-12">Upvote</div>
+                                <div class="col-md-12">@ce.Score.ToString()</div>
+                                <div class="col-md-12">Downvote</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">@ce.Body</div>
+                    </div>
+                }
+            }
+            <hr />
+        }
+    </div>
+</div>
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.PostID }) |
     @Html.ActionLink("Back to List", "Index")
