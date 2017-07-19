@@ -1,48 +1,88 @@
 ﻿@model StructuredDebate.Models.Post
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Html.DisplayFor(model => model.Claim);
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>Post</h4>
+    <h4>@Html.DisplayFor(model => model.Claim)</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Claim)
-        </dt>
+    <div class="score">
+        <div class="upvote">Upvote</div>
+        <div class="score-number">@Html.DisplayFor(model => model.Score)</div>
+        <div class="downvote">Downvote</div>
+    </div>
+    <div class="opening-statement">@Html.DisplayFor(model => model.OpeningStatement)</div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Claim)
-        </dd>
+    <h4 id="affirmative-arguments">Affirmative Arguments</h4>
+    <hr />
+    @foreach (var item in Model.Arguments.Where(c => c.Affirmative))
+    {
+        <div class="score">
+            <div class="upvote">Upvote</div>
+            <div class="score-number">@item.Score.ToString()</div>
+            <div class="downvote">Downvote</div>
+        </div>
+        <div class="opening-statement">@item.Body</div>
+        <h3>Cross Examination</h3>
+        <hr />
+        if (item.CrossExaminations.Count == 0)
+        {
+            <div>There are no crossexaminations</div>
+        }
+        else
+        {
+            foreach (var ce in item.CrossExaminations)
+            {
+                <div class="score">
+                    <div class="upvote">Upvote</div>
+                    <div class="score-number">@ce.Score.ToString()</div>
+                    <div class="downvote">Downvote</div>
+                </div>
+                <div class="opening-statement">@ce.Body</div>
+            }
+        }
+        foreach (var ce in item.CrossExaminations)
+        {
+            <div class="score">
+                <div class="upvote">Upvote</div>
+                <div class="score-number">@ce.Score.ToString()</div>
+                <div class="downvote">Downvote</div>
+            </div>
+            <div class="opening-statement">@ce.Body</div>
+        }
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.OpeningStatement)
-        </dt>
+    <h4 id="negative-arguments">Negative Arguments</h4>
+    <hr />
+    @foreach (var item in Model.Arguments.Where(c => c.Affirmative == false))
+    {
+        <div class="score">
+            <div class="upvote">Upvote</div>
+            <div class="score-number">@item.Score.ToString()</div>
+            <div class="downvote">Downvote</div>
+        </div>
+        <div class="opening-statement">@item.Body</div>
+        <h3>Cross Examination</h3>
+        <hr />
+        if (item.CrossExaminations.Count == 0)
+        {
+            <div>There are no crossexaminations</div>
+        }
+        else
+        {
+            foreach (var ce in item.CrossExaminations)
+            {
+                <div class="score">
+                    <div class="upvote">Upvote</div>
+                    <div class="score-number">@ce.Score.ToString()</div>
+                    <div class="downvote">Downvote</div>
+                </div>
+                <div class="opening-statement">@ce.Body</div>
+            }
+        }
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.OpeningStatement)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Score)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Score)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-
-    </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.PostID }) |
